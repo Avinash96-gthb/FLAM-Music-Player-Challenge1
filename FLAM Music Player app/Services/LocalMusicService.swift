@@ -9,10 +9,14 @@ class LocalMusicService: MusicSourceProtocol {
     private var localSongs: [Song] = []
     
     func initialize() -> AnyPublisher<Bool, Error> {
+        print("🚀 LocalMusicService.initialize() called")
         return Future { promise in
+            print("📍 Inside Future block")
             DispatchQueue.global().async {
+                print("⚡ Starting loadLocalMusicLibrary on background thread")
                 self.loadLocalMusicLibrary()
                 DispatchQueue.main.async {
+                    print("✅ LocalMusicService initialization complete")
                     promise(.success(true))
                 }
             }
@@ -34,6 +38,12 @@ class LocalMusicService: MusicSourceProtocol {
     
     func loadSong(song: Song) -> AnyPublisher<URL?, Error> {
         return Future { promise in
+            // Handle empty sourceID (placeholder songs)
+            guard !song.sourceID.isEmpty else {
+                promise(.failure(LocalMusicError.fileNotFound))
+                return
+            }
+            
             // For local files, the sourceID contains the file path
             let url = URL(fileURLWithPath: song.sourceID)
             
@@ -59,23 +69,33 @@ class LocalMusicService: MusicSourceProtocol {
     // MARK: - Private Methods
     
     private func loadLocalMusicLibrary() {
+        print("🎵 loadLocalMusicLibrary() started")
+        
         // Load from Documents directory and bundle
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let bundlePath = Bundle.main.bundleURL
         
+        print("📁 Documents path: \(documentsPath)")
+        print("📦 Bundle path: \(bundlePath)")
+        
         var songs: [Song] = []
         
         // Load from documents directory
+        print("🔍 Loading from documents directory...")
         songs.append(contentsOf: loadSongsFromDirectory(documentsPath))
         
         // Load from app bundle
+        print("🔍 Loading from app bundle...")
         songs.append(contentsOf: loadSongsFromDirectory(bundlePath))
         
         // Add some sample songs for demo purposes
+        print("🔍 Creating sample local songs...")
         songs.append(contentsOf: createSampleLocalSongs())
         
+        print("📊 Total songs loaded: \(songs.count)")
         self.localSongs = songs
     }
+    
     
     private func loadSongsFromDirectory(_ directory: URL) -> [Song] {
         var songs: [Song] = []
@@ -148,32 +168,40 @@ class LocalMusicService: MusicSourceProtocol {
     }
     
     private func createSampleLocalSongs() -> [Song] {
-        return [
-            Song(
-                title: "Sample Song 1",
-                artist: "Local Artist",
-                album: "Demo Album",
-                duration: 180,
-                sourceType: .local,
-                sourceID: "/path/to/sample1.mp3"
-            ),
-            Song(
-                title: "Sample Song 2",
-                artist: "Another Artist",
-                album: "Demo Album",
-                duration: 210,
-                sourceType: .local,
-                sourceID: "/path/to/sample2.mp3"
-            ),
-            Song(
-                title: "Local Track",
-                artist: "Indie Artist",
-                album: "Self Released",
-                duration: 195,
-                sourceType: .local,
-                sourceID: "/path/to/local_track.mp3"
-            )
+        var songs: [Song] = []
+        
+       
+        
+        
+        
+        // Use actual iOS system sounds for testing
+        let systemSounds = [
+            ("/System/Library/Audio/UISounds/new-mail.caf", "New Mail", "iOS System"),
+            ("/System/Library/Audio/UISounds/sent.caf", "Sent", "iOS System"),
+            ("/System/Library/Audio/UISounds/ReceivedMessage.caf", "Received Message", "iOS System"),
+            ("/System/Library/Audio/UISounds/SentMessage.caf", "Sent Message", "iOS System")
         ]
+        
+        print("🔔 Checking system sounds...")
+        
+        for (path, title, artist) in systemSounds {
+            if FileManager.default.fileExists(atPath: path) {
+                print("✅ Found system sound: \(title) at \(path)")
+                let song = Song(
+                    title: title,
+                    artist: artist,
+                    album: "System Sounds",
+                    duration: 1.0,
+                    artworkURL: nil,
+                    sourceType: .local,
+                    sourceID: path
+                )
+                songs.append(song)
+            } else {
+                print("❌ System sound not found: \(path)")
+            }
+        }
+        return songs
     }
 }
 

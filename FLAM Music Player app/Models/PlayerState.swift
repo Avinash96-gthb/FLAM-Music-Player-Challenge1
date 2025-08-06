@@ -37,8 +37,9 @@ struct PlaybackProgress: Equatable {
     let duration: TimeInterval
     
     var progress: Double {
-        guard duration > 0 else { return 0 }
-        return currentTime / duration
+        guard duration > 0, !duration.isNaN, !duration.isInfinite,
+              !currentTime.isNaN, !currentTime.isInfinite else { return 0 }
+        return min(max(currentTime / duration, 0), 1)
     }
     
     var formattedCurrentTime: String {
@@ -49,16 +50,15 @@ struct PlaybackProgress: Equatable {
         return formatTime(duration)
     }
     
-    var formattedRemaining: String {
-        return formatTime(duration - currentTime)
-    }
-    
     private func formatTime(_ time: TimeInterval) -> String {
+        guard !time.isNaN && !time.isInfinite && time >= 0 else { return "0:00" }
+        
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
         return String(format: "%d:%02d", minutes, seconds)
     }
 }
+
 
 // MARK: - Repeat Mode
 enum RepeatMode: String, Codable, CaseIterable {

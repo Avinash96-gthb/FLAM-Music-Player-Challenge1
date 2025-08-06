@@ -31,6 +31,19 @@ class MusicPlayerService: NSObject, ObservableObject {
     override init() {
         super.init()
         setupAudioSession()
+        setMusicSource(.local)
+            
+            // Initialize the local service
+            localMusicService.initialize()
+                .sink(
+                    receiveCompletion: { completion in
+                        print("🎵 Local service initialization: \(completion)")
+                    },
+                    receiveValue: { success in
+                        print("🎵 Local service ready: \(success)")
+                    }
+                )
+                .store(in: &cancellables)
     }
     
     // MARK: - Public Methods
@@ -207,7 +220,16 @@ class MusicPlayerService: NSObject, ObservableObject {
     
     private func playSong(from url: URL?, song: Song) {
         guard let url = url else {
-            updatePlayerState(.error("Could not load audio file"))
+            let errorMessage = song.sourceID.isEmpty ?
+                "This is a placeholder song - no audio file available" :
+                "Audio file not found"
+            updatePlayerState(.error(errorMessage))
+            return
+        }
+        
+        // Verify file exists
+        if !FileManager.default.fileExists(atPath: url.path) {
+            updatePlayerState(.error("Audio file not found: \(url.lastPathComponent)"))
             return
         }
         
@@ -272,13 +294,15 @@ class MusicPlayerService: NSObject, ObservableObject {
     private func updateProgress() {
         guard let player = audioPlayer else { return }
         
-        let progress = PlaybackProgress(
-            currentTime: player.currentTime,
-            duration: player.duration
-        )
+        let currentTime = player.currentTime
+        let duration = player.duration
         
-        playbackProgress = progress
-        notifyProgressUpdate(progress)
+        guard !currentTime.isNaN, !duration.isNaN,
+              !currentTime.isInfinite, !duration.isInfinite else {
+            return
+        }
+        
+        playbackProgress = PlaybackProgress(currentTime: currentTime, duration: duration)
     }
     
     private func updatePlayerState(_ state: PlayerState) {

@@ -22,6 +22,7 @@ class SourceSelectionViewModel: ObservableObject {
     
     init() {
         initializeAvailableSources()
+        initializeSource(.local)
         loadRecommendations()
     }
     
@@ -40,25 +41,31 @@ class SourceSelectionViewModel: ObservableObject {
     }
     
     func initializeSource(_ sourceType: MusicSourceType) {
+        print("🔄 Initializing source: \(sourceType)")
         isInitializing = true
         initializationError = nil
         
         let source = getSourceService(for: sourceType)
+        print("🎪 Got source service: \(source.sourceName)")
         
         source.initialize()
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { [weak self] completion in
+                    print("🏁 Source initialization completion: \(completion)")
                     self?.isInitializing = false
                     
                     if case .failure(let error) = completion {
+                        print("❌ Initialization failed: \(error)")
                         self?.initializationError = error.localizedDescription
                         self?.updateSourceAvailability(sourceType, isAvailable: false)
                     } else {
+                        print("✅ Initialization successful")
                         self?.updateSourceAvailability(sourceType, isAvailable: true)
                     }
                 },
                 receiveValue: { [weak self] success in
+                    print("📈 Initialization value received: \(success)")
                     if success {
                         self?.selectSource(sourceType)
                     }
@@ -66,6 +73,7 @@ class SourceSelectionViewModel: ObservableObject {
             )
             .store(in: &cancellables)
     }
+    
     
     // MARK: - Search Functionality
     

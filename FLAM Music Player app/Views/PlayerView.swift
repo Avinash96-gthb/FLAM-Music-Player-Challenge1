@@ -226,7 +226,7 @@ struct QueueView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(Array(viewModel.queue.enumerated()), id: \.element.id) { index, song in
+                ForEach(Array(viewModel.queue.enumerated()), id: \.offset) { index, song in
                     QueueRowView(
                         song: song,
                         isCurrentSong: index == viewModel.musicPlayerService.currentIndex,

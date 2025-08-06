@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E1C3400E2E429DBE00A391B1 /* intensity-by-audio-club-343637.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1C3400D2E429DBE00A391B1 /* intensity-by-audio-club-343637.mp3 */; };
+		E1C340102E4304C600A391B1 /* emotional-piano-music-256262.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1C3400F2E4304C600A391B1 /* emotional-piano-music-256262.mp3 */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E1C33FC22E42869A00A391B1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,22 +32,14 @@
 		E1C33FB42E42869700A391B1 /* FLAM Music Player app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FLAM Music Player app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1C33FC12E42869A00A391B1 /* FLAM Music Player appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FLAM Music Player appTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1C33FCB2E42869A00A391B1 /* FLAM Music Player appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FLAM Music Player appUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1C3400D2E429DBE00A391B1 /* intensity-by-audio-club-343637.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "intensity-by-audio-club-343637.mp3"; sourceTree = "<group>"; };
+		E1C3400F2E4304C600A391B1 /* emotional-piano-music-256262.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "emotional-piano-music-256262.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E1C33FB62E42869700A391B1 /* FLAM Music Player app */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "FLAM Music Player app";
-			sourceTree = "<group>";
-		};
-		E1C33FC42E42869A00A391B1 /* FLAM Music Player appTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "FLAM Music Player appTests";
-			sourceTree = "<group>";
-		};
-		E1C33FCE2E42869A00A391B1 /* FLAM Music Player appUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "FLAM Music Player appUITests";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -76,9 +73,9 @@
 			isa = PBXGroup;
 			children = (
 				E1C33FB62E42869700A391B1 /* FLAM Music Player app */,
-				E1C33FC42E42869A00A391B1 /* FLAM Music Player appTests */,
-				E1C33FCE2E42869A00A391B1 /* FLAM Music Player appUITests */,
 				E1C33FB52E42869700A391B1 /* Products */,
+				E1C3400D2E429DBE00A391B1 /* intensity-by-audio-club-343637.mp3 */,
+				E1C3400F2E4304C600A391B1 /* emotional-piano-music-256262.mp3 */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,9 +127,6 @@
 			dependencies = (
 				E1C33FC32E42869A00A391B1 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				E1C33FC42E42869A00A391B1 /* FLAM Music Player appTests */,
-			);
 			name = "FLAM Music Player appTests";
 			packageProductDependencies = (
 			);
@@ -152,9 +146,6 @@
 			);
 			dependencies = (
 				E1C33FCD2E42869A00A391B1 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				E1C33FCE2E42869A00A391B1 /* FLAM Music Player appUITests */,
 			);
 			name = "FLAM Music Player appUITests";
 			packageProductDependencies = (
@@ -212,6 +203,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1C3400E2E429DBE00A391B1 /* intensity-by-audio-club-343637.mp3 in Resources */,
+				E1C340102E4304C600A391B1 /* emotional-piano-music-256262.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
