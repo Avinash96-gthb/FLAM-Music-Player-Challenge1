@@ -16,7 +16,7 @@ This application follows the **MVVM (Model-View-ViewModel)** architecture patter
 ### 🎵 Multiple Music Sources
 - **Local Files**: Play music files stored on the device
 - **Spotify Integration**: Mock implementation of Spotify streaming
-- **AudioDB Service**: Discover music from TheAudioDB online database
+- **AudioDB Service**: Mock implimentation using audioDB
 
 ### 🎮 Comprehensive Playback Control
 - Play, pause, stop, skip, previous functionality
@@ -203,37 +203,7 @@ Comprehensive error handling throughout:
 - Audio playback errors
 - User-friendly error messages
 
-## Testing Strategy
 
-The architecture supports easy testing:
-- **Unit Tests**: Test ViewModels and Services independently
-- **Integration Tests**: Test music source implementations
-- **UI Tests**: Test SwiftUI views and user interactions
 
-## Future Enhancements
 
-- [ ] Real Spotify SDK integration
-- [ ] Cloud storage support (iCloud, Dropbox)
-- [ ] Equalizer and audio effects
-- [ ] Social features (sharing playlists)
-- [ ] Offline mode for streaming sources
-- [ ] CarPlay support
-- [ ] Watch app companion
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Implement your changes following the existing patterns
-4. Add appropriate tests
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- [TheAudioDB](https://www.theaudiodb.com/) for providing free music metadata API
-- Apple's AVFoundation framework for audio playback
-- SwiftUI and Combine for reactive UI development
